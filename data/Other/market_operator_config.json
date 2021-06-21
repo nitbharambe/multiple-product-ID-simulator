@@ -1,0 +1,13 @@
+{
+  "start_trade":"16:00",
+  "end_trade":"23:00",
+  "time_step":"5min",
+  "system_regulation": "random",
+  "up_regulation_price":160,
+  "dn_regulation_price":5,
+  "spot_price":30,
+  "influence_imbalance": 1.0,
+  "dual_pricing":true,
+  "random_seed": 42,
+  "description": "This experiment implements strategies change"
+}

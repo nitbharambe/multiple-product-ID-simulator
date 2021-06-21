@@ -1,0 +1,85 @@
+{"RES": {
+    "Wind_1": {
+      "capacity": [2500, 2500, 2500],
+      "da_position": [1100, 1300, 1100],
+      "init_forecast": [1500, 1500, 1200],
+      "realization": [1800, 1700, 1700],
+      "error_constant": [4, 4, 4],
+      "strategy": ["naive","naive","naive"],
+      "limit_price_sell": [10, 20, 15],
+      "limit_price_buy": [150, 150, 150],
+      "range_imb": [10, 10, 10],
+      "eqbm_price": [20, 20, 20],
+      "n_orders":[10, 10, 10],
+      "forecast_type": ["Constant","Constant","Constant"],
+      "update_forecast_every":  ["5min","5min","5min"],
+      "out_probability": [0,0,0],
+      "out_percentage":[0.3,0.1,0.3],
+      "out_time": [0.1,0.1,0.1],
+      "w_update_limits": [0.5,0.5,0.5]
+    }
+  },
+
+  "Consumer": {
+    "Flexible_1": {
+      "capacity": [2400, 2400, 2400],
+      "da_position": [-600, -600, -600],
+      "init_forecast": [-2000, -1800, -1600],
+      "realization": [-1800, -1600, -1700],
+      "error_constant": [4, 4, 4],
+      "strategy": ["naive","naive","naive"],
+      "limit_price_sell": [30, 30, 30],
+      "limit_price_buy": [130, 110, 100],
+      "range_imb": [10, 10, 10],
+      "eqbm_price": [20, 20, 20],
+      "n_orders":[10, 10, 10],
+      "forecast_type": ["Constant","Constant","Constant"],
+      "update_forecast_every":  ["5min","5min","5min"],
+      "out_probability": [0,0,0],
+      "out_percentage":[0.4,0.4,0.4],
+      "out_time": [0.1,0.1,0.1],
+      "w_update_limits": [0.5,0.5,0.5]
+    }},
+
+  "Conventional": {
+    "Thermal_1": {
+      "capacity": [1000,1000,1000],
+      "da_position": [300,200,200],
+      "min_stable_load": [50,50,50],
+      "limit_price_sell": [100,100,100],
+      "limit_price_buy": [25,30,25],
+      "range_imb": [10, 10, 10],
+      "eqbm_price": [50,50,50],
+      "n_orders":[10,10,10],
+      "strategy": ["naive","naive","naive"],
+      "out_probability":[0,0,0],
+      "out_percentage":[0.5,0.5,0.5],
+      "out_time": [0.4,0.4,0.4],
+      "w_update_limits": [0.1,0.1,0.1],
+      "ramp_up": [100,100,100],
+      "ramp_down": [100,100,100],
+      "ramp_active_time": [0.7, 0.7, 0.7]
+    }},
+    "Storage": {
+    "Battery_1": {
+      "capacity": [1000,1000,1000],
+      "da_position": [200,200,200],
+      "min_stable_load": [50,50,50],
+      "stored_energy": [300,300,300],
+      "limit_price_sell": [70,70,70],
+      "limit_price_buy": [40,40,40],
+      "range_imb": [10,10,10],
+      "eqbm_price": [50,50,50],
+      "n_orders": [10,10,10],
+      "strategy": ["AA","AA","AA"],
+      "out_probability": [0.0, 0.0, 0.0],
+      "out_percentage": [0.5,0.5, 0.5],
+      "out_time": [0.5,0.5,0.5],
+      "w_update_limits": [0.1,0.1,0.1],
+      "ramp_up": [500,500,500],
+      "ramp_down": [500,500,500],
+      "ramp_active_time": [0.3, 0.3, 0.3]
+    }
+  }
+}
+

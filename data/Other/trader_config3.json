@@ -1,0 +1,107 @@
+{"RES": {
+    "Wind_1": {
+      "capacity": 100,
+      "da_position": 1000,
+      "init_forecast": 50,
+      "realization": 1000,
+      "error_constant": 5000,
+      "limit_price_sell": 10,
+      "limit_price_buy": 200,
+      "eqbm_price": 50,
+      "n_orders":10,
+      "update_forecast_every": "60min"
+    },
+    "Wind_2": {
+      "capacity": 100,
+      "da_position": 500,
+      "init_forecast": 12,
+      "realization": 500,
+      "error_constant": 1000,
+      "limit_price_sell": 15,
+      "limit_price_buy": 50,
+      "eqbm_price": 50,
+      "n_orders":10,
+      "update_forecast_every": "60min"
+
+    }
+  },
+  "Consumer": {
+    "Flexible_1": {
+      "capacity": 2000,
+      "da_position": -1940,
+      "init_forecast": -100,
+      "realization": -2000,
+      "error_constant": 1000,
+      "limit_price_sell": 60,
+      "limit_price_buy": 150,
+      "eqbm_price": 100,
+      "n_orders":10,
+      "update_forecast_every": "60min"
+    },
+    "Flexible_2": {
+      "capacity": 1000,
+      "da_position": -590,
+      "init_forecast": -400,
+      "realization": -440,
+      "error_constant": 1000,
+      "limit_price_sell": 70,
+      "limit_price_buy": 100,
+      "eqbm_price": 100,
+      "n_orders":10,
+      "update_forecast_every": "60min"
+    },
+    "Flexible_3": {
+      "capacity": 1000,
+      "da_position": -650,
+      "init_forecast": -400,
+      "realization": -800,
+      "error_constant": 1000,
+      "limit_price_sell": 80,
+      "limit_price_buy": 90,
+      "eqbm_price": 100,
+      "n_orders":10,
+      "update_forecast_every": "60min"
+    },
+    "Flexible_4": {
+      "capacity": 1000,
+      "da_position": -670,
+      "init_forecast": -400,
+      "realization": -700,
+      "error_constant": 1000,
+      "limit_price_sell": 90,
+      "limit_price_buy": 80,
+      "eqbm_price": 100,
+      "n_orders":10,
+      "update_forecast_every": "60min"
+    }
+  },
+  "Conventional":{
+    "Thermal_1": {
+      "capacity": 2000,
+      "da_position": 200,
+      "min_stable_load": 50,
+      "limit_price_sell": 40,
+      "limit_price_buy": 150,
+      "eqbm_price": 10,
+      "n_orders":10
+    },
+    "Thermal_2": {
+      "capacity": 1000,
+      "da_position": 0,
+      "min_stable_load": 50,
+      "limit_price_sell": 50,
+      "limit_price_buy": 150,
+      "eqbm_price": 10,
+      "n_orders":10
+    },
+    "Thermal_3": {
+      "capacity": 1000,
+      "da_position": 200,
+      "min_stable_load": 300,
+      "limit_price_sell": 60,
+      "limit_price_buy": 60,
+      "eqbm_price": 10,
+      "n_orders":10
+    }
+  }
+}

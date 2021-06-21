@@ -1,0 +1,66 @@
+{"RES": {
+    "Wind_1": {
+      "capacity": 500,
+      "da_position": 100,
+      "init_forecast": 200,
+      "realization": 400,
+      "error_constant": 4,
+      "strategy": "AA",
+      "limit_price_sell": 10,
+      "limit_price_buy": 150,
+      "range_imb": 10,
+      "eqbm_price": 20,
+      "n_orders":10,
+      "forecast_type": "Constant",
+      "update_forecast_every": "5min",
+      "out_probability":0,
+      "out_percentage":0.5,
+      "out_time": 0.5,
+      "w_update_limits": 0.1,
+      "switch_strategies": 0
+    }
+  },
+
+  "Consumer": {
+    "Flexible_1": {
+      "capacity": 2000,
+      "da_position": -1000,
+      "init_forecast": -1400,
+      "realization": -1900,
+      "error_constant": 4,
+      "strategy": "AA",
+      "limit_price_sell": 30,
+      "limit_price_buy": 150,
+      "range_imb": 10,
+      "eqbm_price": 100,
+      "n_orders":10,
+      "forecast_type": "Constant",
+      "update_forecast_every": "5min",
+      "out_probability":0,
+      "out_percentage":0,
+      "out_time": 0.5,
+      "w_update_limits": 0.1,
+      "switch_strategies": 0
+    }},
+
+  "Conventional":{
+    "Thermal_1": {
+      "capacity": 3000,
+      "da_position": 2000,
+      "min_stable_load": 50,
+      "limit_price_sell": 40,
+      "limit_price_buy": 39,
+      "range_imb": 10,
+      "eqbm_price": 50,
+      "n_orders":10,
+      "strategy": "AA",
+      "out_probability":0.0,
+      "out_percentage":0.5,
+      "out_time": 0.5,
+      "w_update_limits": 0.1,
+      "aon_trader": false,
+      "switch_strategies": 0
+    }
+  }
+}
+

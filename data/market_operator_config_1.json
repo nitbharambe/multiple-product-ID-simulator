@@ -1,0 +1,13 @@
+{
+  "start_trade":["16:00","16:00","16:00"],
+  "end_trade":["23:00","00:00","01:00"],
+  "time_step":["5min","5min","5min"],
+  "system_regulation": ["random","random","random"],
+  "up_regulation_price":[160,180,220],
+  "dn_regulation_price":[5, 8, 10],
+  "spot_price":[40,30,50],
+  "influence_imbalance": [1,1,1],
+  "dual_pricing":[true,true,true],
+  "random_seed": [42,42,42],
+  "description": "16:00 constant; All AA"
+}

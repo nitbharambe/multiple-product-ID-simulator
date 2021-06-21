@@ -1,0 +1,46 @@
+{
+  "Consumer": {
+    "Flexible_1": {
+      "capacity": 2000,
+      "da_position": 0,
+      "init_forecast": -100,
+      "realization": -1000,
+      "error_constant": 50000,
+      "limit_price_sell": 98,
+      "limit_price_buy": 100,
+      "eqbm_price": 99,
+      "ratio": 0.1
+    },
+    "Flexible_2": {
+      "capacity": 2000,
+      "da_position": 0,
+      "init_forecast": -100,
+      "realization": -1000,
+      "error_constant": 100000,
+      "limit_price_sell": 95,
+      "limit_price_buy": 98,
+      "eqbm_price": 97,
+      "ratio": 0.1
+    }
+  },
+  "Conventional": {
+    "Thermal_1": {
+      "capacity": 5000,
+      "da_position": 200,
+      "min_stable_load": 50,
+      "limit_price_sell": 97,
+      "limit_price_buy": 100,
+      "eqbm_price": 98,
+      "ratio": 0.1
+    },
+    "Thermal_2": {
+      "capacity": 5000,
+      "da_position": 200,
+      "min_stable_load": 50,
+      "limit_price_sell": 96,
+      "limit_price_buy": 101,
+      "eqbm_price": 100,
+      "ratio": 0.1
+    }
+  }
+}

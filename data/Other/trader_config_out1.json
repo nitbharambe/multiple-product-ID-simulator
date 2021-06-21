@@ -1,0 +1,65 @@
+{"RES": {
+    "Wind_1": {
+      "capacity": [500,500,500],
+      "da_position": [200,150,100],
+      "init_forecast": [300,300,400],
+      "realization": [400,200,300],
+      "error_constant": [4,4,4],
+      "strategy": ["AA","AA","AA"],
+      "limit_price_sell": [10,10,10],
+      "limit_price_buy": [110,140,130],
+      "range_imb": [10,10,10],
+      "eqbm_price": [20,20,20],
+      "n_orders":[10,10,10],
+      "forecast_type": ["Cos","Sin","Cos"],
+      "update_forecast_every": ["5min","5min","5min"],
+      "out_probability":[0.4,0.4,0.4],
+      "out_percentage":[0.5,0.5,0.5],
+      "out_time": [0.5,0.5,0.5],
+      "w_update_limits": [0.1,0.1,0.1]
+    }
+  },
+
+  "Consumer": {
+    "Flexible_1": {
+      "capacity": [2000,2000,2000],
+      "da_position": [-1100,-900,-1200],
+      "init_forecast": [-1400,-1300,-1500],
+      "realization": [-1900,-1800,-1700],
+      "error_constant": [4,4,4],
+      "strategy": ["AA","AA","AA"],
+      "limit_price_sell": [30,30,30],
+      "limit_price_buy": [150,150,150],
+      "range_imb": [10,10,10],
+      "eqbm_price": [100,100,100],
+      "n_orders": [10,10,10],
+      "forecast_type": ["Cos","Sin","Sin"],
+      "update_forecast_every": ["5min","5min","5min"],
+      "out_probability": [0,0,0],
+      "out_percentage": [0,0,0],
+      "out_time": [0.5,0.5,0.5],
+      "w_update_limits": [0.1,0.1,0.1]
+    }},
+
+  "Conventional": {
+    "Thermal_1": {
+      "capacity": [3000,3000,3000],
+      "da_position": [2000,2000,2000],
+      "min_stable_load": [50,50,50],
+      "limit_price_sell": [40,40,40],
+      "limit_price_buy": [39,39,39],
+      "range_imb": [10,10,10],
+      "eqbm_price": [50,50,50],
+      "n_orders": [10,10, 10],
+      "strategy": ["AA","AA","AA"],
+      "out_probability": [0.0, 0.0, 0.0],
+      "out_percentage": [0.5,0.5, 0.5],
+      "out_time": [0.5,0.5,0.5],
+      "w_update_limits": [0.1,0.1,0.1],
+      "ramp_up": [200,200,200],
+      "ramp_down": [100,100,100],
+      "ramp_active_time": [0.8, 0.8, 0.8]
+    }
+  }
+}
+
