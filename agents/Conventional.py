@@ -128,7 +128,7 @@ class Conventional(Agent):
         else:
             self.limit_price_buy = self.limit_price_buy_init
 
-    def compute_imbalance_was(self, time):
+    def compute_imbalance_old(self, time):
         """
         Compute the difference between current position and recent forecast
         :return: N/A
@@ -190,7 +190,7 @@ class Conventional(Agent):
         else:
             self.imbalance = min(self.capacity - self._position, 0)
 
-    def compute_margins_was(self,time):
+    def compute_margins_old(self,time):
         """
         Function that computes the available upwards or downwards ramping capacity of the unit.
         The upwards(donwards) capacity is the max volume that can be sold(bought) in the market.

@@ -5,6 +5,9 @@ from scipy.optimize import bisect
 
 import pandas as pd
 import numpy as np
+from collections import defaultdict
+from plots.plot_simulation import Plotter
+
 
 from mmabm.orderbook import Orderbook
 from mmabm.shared import Side, OType
@@ -18,6 +21,7 @@ AGENT_TYPES = {RES.name(): RES, Consumer.name(): Consumer, Conventional.name(): 
 def fix_random_seeds(seed):
     np.random.seed(seed)
     random.seed(seed)
+
 
 
 class MarketOperator(object):
@@ -484,12 +488,15 @@ class MarketOperator(object):
             trader.true_up_regulation = self.up_regulation_price
             trader.true_down_regulation = self.dn_regulation_price
 
-
-from collections import defaultdict
-from plots.plot_simulation import Plotter
-
-
 class allmarket:
+    """
+    Initialize the the Market Operator with multiple products
+
+    :param config_traders: dict with the market participants configuration params
+    :param config_market_operator: dict with the market operator configuration params
+    :param path: Path for saving results
+    :param no_of_products: Number of products
+    """
 
     def __init__(self, config_traders, config_market_operator, path, no_of_products):
         self.config_traders = config_traders
@@ -527,6 +534,11 @@ class allmarket:
         return "allmarket"
 
     def build_products(self):
+        """
+        Instantiates multiple products (multiple instances of MarketOperator)
+        :return: N/A
+        """
+
         if self.no_of_products>1:
             for p_no in range(self.no_of_products):
                 config_mo_single = dict()
@@ -548,6 +560,11 @@ class allmarket:
 
 
     def update_multiple_product_info(self, current_time):
+        """
+        Makes new private information of a trader available across all the products
+        :param current_time: The time index at which the new information is added
+        :return: N/A
+        """
         all_product_stored = []
         all_product_eqlbm = []
         for p_no, product in self.products.items():
@@ -572,6 +589,10 @@ class allmarket:
                         trader.all_stored = all_product_stored
 
     def runproduct(self):
+        """
+        Simulates the multiple products operation.
+        :return: N/A
+        """
         for current_time in self.trading_horizon_all:
             # print(current_time)
             self.update_multiple_product_info(current_time)
@@ -589,11 +610,19 @@ class allmarket:
         self.store_result_all(before_imbalance_flag=False)
 
     def plots(self):
+        """
+        Plots the results of all products
+        :return: N/A
+        """
         for p_no, product in self.products.items():
             self.plotters[p_no] = Plotter(product, product.path, show_plots=False)
             self.plotters[p_no].generate_plots()
 
     def store_result_all(self, before_imbalance_flag):
+        """
+        Stores the result of position and revenue of all products in a csv file
+        :return: N/A
+        """
         columns = ["Product", "Trader", "Position", "Revenues"]
 
         data = [(p_no, id, trader._position, trader._cash_flow) for p_no, product in self.products.items() for
@@ -603,6 +632,10 @@ class allmarket:
                                                               before_imbalance_flag else
                                                               "results_after_imbalance_settlement.csv"))
     def store_imbalances(self):
+        """
+        Debugging method which stores imbalances. It was used to understand the functioning of the simulator
+        :return: N/A
+        """
         for p_no, product in self.products.items():
             for id, trader in product.traders.items():
                 trader.all_imbalances.append(trader.imbalance)

@@ -145,6 +145,7 @@ class Storage(Agent):
     def compute_imbalance_old(self, time):
         """
         Compute the difference between current position and recent forecast. Added physical ramp up/down constraints
+        First attempt at storage imbalances
         :return: N/A
         """
         if time in self.ramp_active_timeline:
@@ -189,7 +190,9 @@ class Storage(Agent):
                     imbl_e = - (self.min_stable_load - add_energy)
                 else:
                     imbl_e = 0
-                    '''
+        ''''
+        #First attempt at improved storage algorithm
+        
         if self.product_number > 0:
             vwp_behind = sum(self.product_positions[i] * self.all_eqlbm[i] for i in
                              range(self.product_number)) / sum(self.product_positions[:self.product_number])

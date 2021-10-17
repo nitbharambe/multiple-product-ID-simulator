@@ -7,6 +7,8 @@ from mmabm.shared import Side, OType
 
 class Orderbook(object):
     '''
+    Backup file of orderbook
+
     Orderbook tracks, processes and matches orders.
 
     Orderbook is a set of linked lists and dictionaries containing trades, bids and asks.

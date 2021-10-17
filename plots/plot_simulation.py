@@ -1,5 +1,5 @@
 import os
-from datetime import timedelta
+import datetime 
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -31,15 +31,19 @@ class Plotter(object):
         self.figdpi = 500
         fontP = FontProperties()
         fontP.set_size('xx-small')
-        self.xformatter = mdates.DateFormatter('%H')
 
 
     def plot_positions(self):
         plt.figure()
-        plt.title("Market Positions"+'_'+str(self.product_number))
+        ax = plt.subplot(111)
+        ax.set_title("Market Positions"+'_'+str(self.product_number))
+        ax.set_xlabel("Time (hrs)")
+        x_data = self.trading_horizon
+        ax.xaxis.set_major_formatter(self.xformatter)
+        ax.set_xlim([self.trading_horizon[0] - datetime.timedelta(hours=1), self.trading_horizon[-1] + datetime.timedelta(hours=1)])
         for id, traders in self.traders.items():
-            plt.plot(traders._cum_position, label=id)
-        plt.legend(bbox_to_anchor=(1.04,0.5), loc="center left", borderaxespad=0)
+            ax.plot(x_data,traders._cum_position, label=id)
+        ax.legend(bbox_to_anchor=(1.04,0.5), loc="center left", borderaxespad=0)
         if self.show_plots:plt.show()
         plt.savefig("%s/%s_%s%s" % (self.path, "positions", self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
 
@@ -77,7 +81,8 @@ class Plotter(object):
                 ax.set_xticklabels([])
                 ax1.legend(bbox_to_anchor=(1.04,0.5), loc="center left", borderaxespad=0)
                 #ax1.set_ylim([self.down_lim, self.up_lim])
-                plt.gcf().axes[0].xaxis.set_major_formatter(self.xformatter)
+                ax1.xaxis.set_major_formatter(self.xformatter)
+                ax.xaxis.set_major_formatter(self.xformatter)
                 plt.savefig("%s/%s_%s_%s%s" % (self.path, id, "private_info",self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
             elif isinstance(traders, Storage):
                 plt.figure()
@@ -110,7 +115,8 @@ class Plotter(object):
                 ax.set_xticklabels([])
                 ax1.legend(bbox_to_anchor=(1.04,0.5), loc="center left", borderaxespad=0)
                 #ax1.set_ylim([self.down_lim, self.up_lim])
-                plt.gcf().axes[0].xaxis.set_major_formatter(self.xformatter)
+                ax.xaxis.set_major_formatter(self.xformatter)
+                ax1.xaxis.set_major_formatter(self.xformatter)
                 plt.savefig("%s/%s_%s_%s%s" % (self.path, id, "private_info", self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
             else:
                 plt.figure()
@@ -148,7 +154,8 @@ class Plotter(object):
                 ax.set_xticklabels([])
                 ax1.legend(bbox_to_anchor=(1.04,0.5), loc="center left", borderaxespad=0)
                 #ax1.set_ylim([self.down_lim, self.up_lim])
-                plt.gcf().axes[0].xaxis.set_major_formatter(self.xformatter)
+                ax.xaxis.set_major_formatter(self.xformatter)
+                ax1.xaxis.set_major_formatter(self.xformatter)
                 plt.savefig("%s/%s_%s_%s%s" % (self.path, id, "private_info", self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
 
 
@@ -189,7 +196,7 @@ class Plotter(object):
         ax.set_title("Transaction price")
         ax.set_ylabel("Price (€)")
         dates = [transaction["resting_timestamp"] for transaction in self.order_book.trade_book]
-        ax.set_xlim([self.trading_horizon[0] - timedelta(hours=1), self.trading_horizon[-1] + timedelta(hours=1)])
+        ax.set_xlim([self.trading_horizon[0] - datetime.timedelta(hours=1), self.trading_horizon[-1] + datetime.timedelta(hours=1)])
         ax.scatter(dates, [transaction["price"] for transaction in self.order_book.trade_book])
         #plt.autofmt_xdate()
         plt.gcf().axes[0].xaxis.set_major_formatter(self.xformatter)

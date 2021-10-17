@@ -281,6 +281,12 @@ class Agent:
         self.neg_imb_price = self.range_imb * np.random.random_sample() + (2 * self.true_up_regulation - self.range_imb) / 2
 
     def switch_strategies(self,time, top_of_book):
+        """
+        Switch strategies from one to another.
+        :param time: timestep
+        :param top_of_book: top of the order book
+        :return: N/A
+        """
         if time == self.switch_strategies_time and not self.switch_strategies_time == self.trading_horizon[0]:
             temp = self.trader_behavior
             self.trader_behavior = self.secondary_trader_behaviour
