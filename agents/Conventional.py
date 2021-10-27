@@ -43,21 +43,21 @@ class Conventional(Agent):
     @staticmethod
     def name():
         return "Conventional"
-
-    def compute_margins(self):
-        """
-        Function that computes the available upwards or downwards ramping capacity of the unit.
-        The upwards(donwards) capacity is the max volume that can be sold(bought) in the market.
-        :return: N/A
-        """
-        #
-        if self.imbalance < 0.:
-            self.ramp_up_margin = 0.
-            self.ramp_down_margin = self._position - self.capacity #self.ramp_down
-
-        else:
-            self.ramp_up_margin = self.capacity - self._position
-            self.ramp_down_margin = max(self._position - min(self.min_stable_load, self.capacity), 0)
+    #
+    # def compute_margins(self):
+    #     """
+    #     Function that computes the available upwards or downwards ramping capacity of the unit.
+    #     The upwards(donwards) capacity is the max volume that can be sold(bought) in the market.
+    #     :return: N/A
+    #     """
+    #     #
+    #     if self.imbalance < 0.:
+    #         self.ramp_up_margin = 0.
+    #         self.ramp_down_margin = self._position - self.capacity #self.ramp_down
+    #
+    #     else:
+    #         self.ramp_up_margin = self.capacity - self._position
+    #         self.ramp_down_margin = max(self._position - min(self.min_stable_load, self.capacity), 0)
 
     def process_signal(self, time, top_of_book):
         """
@@ -110,12 +110,12 @@ class Conventional(Agent):
     def da_trade(self):
         return "SUPPLY", self.capacity, self.limit_price_sell
 
-    def compute_imbalance(self):
-        """
-        Compute the difference between current position and recent forecast
-        :return: N/A
-        """
-        self.imbalance = min(self.capacity - self._position, 0)
+    # def compute_imbalance(self):
+    #     """
+    #     Compute the difference between current position and recent forecast
+    #     :return: N/A
+    #     """
+    #     self.imbalance = min(self.capacity - self._position, 0)
 
     def update_limit(self):
         """
@@ -128,32 +128,32 @@ class Conventional(Agent):
         else:
             self.limit_price_buy = self.limit_price_buy_init
 
-    def compute_imbalance_old(self, time):
-        """
-        Compute the difference between current position and recent forecast
-        :return: N/A
-        """
-        if time in self.ramp_active_timeline:
-            try:
-                cond1 = (self._position-self.product_positions[self.product_number + 1] > self.ramp_down)
-            except:
-                cond1 = False
-            try:
-                cond2 = (self.product_positions[self.product_number - 1] - self._position > self.ramp_down)
-            except:
-                cond2 = False
-            if cond1 or cond2:
-                min_t = -(self._position - min(self.product_positions[self.product_number + 1],
-                                                        self.product_positions[self.product_number - 1]) - self.ramp_down)
-                self.imbalance = min(min_t, self.capacity - self._position, 0)
-#            if cond1:
-#                self.imbalance = -(self._position - self.product_positions[self.product_number + 1] - self.ramp_down)
-#            elif cond2:
-#                self.imbalance = -(self._position - self.product_positions[self.product_number - 1] - self.ramp_down)
-            else:
-                self.imbalance = min(self.capacity - self._position, 0)
-        else:
-            self.imbalance = min(self.capacity - self._position, 0)
+#     def compute_imbalance_old(self, time):
+#         """
+#         Compute the difference between current position and recent forecast
+#         :return: N/A
+#         """
+#         if time in self.ramp_active_timeline:
+#             try:
+#                 cond1 = (self._position-self.product_positions[self.product_number + 1] > self.ramp_down)
+#             except:
+#                 cond1 = False
+#             try:
+#                 cond2 = (self.product_positions[self.product_number - 1] - self._position > self.ramp_down)
+#             except:
+#                 cond2 = False
+#             if cond1 or cond2:
+#                 min_t = -(self._position - min(self.product_positions[self.product_number + 1],
+#                                                         self.product_positions[self.product_number - 1]) - self.ramp_down)
+#                 self.imbalance = min(min_t, self.capacity - self._position, 0)
+# #            if cond1:
+# #                self.imbalance = -(self._position - self.product_positions[self.product_number + 1] - self.ramp_down)
+# #            elif cond2:
+# #                self.imbalance = -(self._position - self.product_positions[self.product_number - 1] - self.ramp_down)
+#             else:
+#                 self.imbalance = min(self.capacity - self._position, 0)
+#         else:
+#             self.imbalance = min(self.capacity - self._position, 0)
 
     def compute_imbalance_new(self, time):
         """
@@ -190,23 +190,23 @@ class Conventional(Agent):
         else:
             self.imbalance = min(self.capacity - self._position, 0)
 
-    def compute_margins_old(self,time):
-        """
-        Function that computes the available upwards or downwards ramping capacity of the unit.
-        The upwards(donwards) capacity is the max volume that can be sold(bought) in the market.
-        :return: N/A
-        """
-        #
-        if self.imbalance < 0.:
-            if time in self.ramp_active_timeline:
-                self.ramp_down_margin = -self.imbalance
-            else:
-                self.ramp_down_margin = self._position - self.capacity
-            self.ramp_up_margin = 0.
-
-        else:
-            self.ramp_up_margin = self.capacity - self._position
-            self.ramp_down_margin = max(self._position - min(self.min_stable_load, self.capacity), 0)
+    # def compute_margins_old(self,time):
+    #     """
+    #     Function that computes the available upwards or downwards ramping capacity of the unit.
+    #     The upwards(donwards) capacity is the max volume that can be sold(bought) in the market.
+    #     :return: N/A
+    #     """
+    #     #
+    #     if self.imbalance < 0.:
+    #         if time in self.ramp_active_timeline:
+    #             self.ramp_down_margin = -self.imbalance
+    #         else:
+    #             self.ramp_down_margin = self._position - self.capacity
+    #         self.ramp_up_margin = 0.
+    #
+    #     else:
+    #         self.ramp_up_margin = self.capacity - self._position
+    #         self.ramp_down_margin = max(self._position - min(self.min_stable_load, self.capacity), 0)
 
     def compute_margins_new(self,time):
         """
@@ -223,8 +223,6 @@ class Conventional(Agent):
                 self.ramp_down_margin = 0.
                 self.ramp_up_margin = max(self.ramp_up,abs(self.imbalance))
             else:
-                self.ramp_down_margin = 0
-                self.ramp_up_margin = 0
                 self.ramp_up_margin = min(self.capacity - self._position, 0.5 * self.ramp_up)
                 self.ramp_down_margin = min(max(self._position - min(self.min_stable_load, self.capacity), 0),
                                             0.5 * self.ramp_down)

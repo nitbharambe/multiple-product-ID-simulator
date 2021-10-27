@@ -125,49 +125,49 @@ class Storage(Agent):
         self.imbalance = self.  stored_energy - sum(self.product_positions)
         #self.imbalance = min(self.capacity - self._position, 0)
 
-    def update_limit(self):
-        """
-        Function intended to change the limits to buy and sell based on the market conditions. For now it does not change anything
-        :return: N/A
-        """
-        if self.imbalance < 0.:
-            self.limit_price_buy = (1 - self.w_update_limits) * self.limit_price_buy + self.w_update_limits * max(
-                self.neg_imb_price, self.limit_price_buy_init)
-            if self.own_bid_transactions:
-                self.limit_price_buy = min(self.limit_price_buy, self.own_bid_transactions[-1])
-        else:
-            self.limit_price_sell = (1 - self.w_update_limits) * self.limit_price_sell + self.w_update_limits * min(
-                self.pos_imb_price,
-                self.limit_price_sell_init)
-            if self.own_ask_transactions:
-                self.limit_price_sell = max(self.limit_price_sell, self.own_ask_transactions[-1])
+    # def update_limit(self):
+    #     """
+    #     Function intended to change the limits to buy and sell based on the market conditions. For now it does not change anything
+    #     :return: N/A
+    #     """
+    #     if self.imbalance < 0.:
+    #         self.limit_price_buy = (1 - self.w_update_limits) * self.limit_price_buy + self.w_update_limits * max(
+    #             self.neg_imb_price, self.limit_price_buy_init)
+    #         if self.own_bid_transactions:
+    #             self.limit_price_buy = min(self.limit_price_buy, self.own_bid_transactions[-1])
+    #     else:
+    #         self.limit_price_sell = (1 - self.w_update_limits) * self.limit_price_sell + self.w_update_limits * min(
+    #             self.pos_imb_price,
+    #             self.limit_price_sell_init)
+    #         if self.own_ask_transactions:
+    #             self.limit_price_sell = max(self.limit_price_sell, self.own_ask_transactions[-1])
 
-    def compute_imbalance_old(self, time):
-        """
-        Compute the difference between current position and recent forecast. Added physical ramp up/down constraints
-        First attempt at storage imbalances
-        :return: N/A
-        """
-        if time in self.ramp_active_timeline:
-            try:
-                cond1 = (self._position - self.product_positions[self.product_number + 1] > self.ramp_down)
-            except:
-                cond1 = False
-            try:
-                cond2 = (self._position - self.product_positions[self.product_number - 1] > self.ramp_down)
-            except:
-                cond2 = False
-            if cond1 or cond2:
-                self.imbalance = -(self._position - min(self.product_positions[self.product_number + 1],
-                                                        self.product_positions[self.product_number - 1]) - self.ramp_down)
-            #elif cond1:
-            #    self.imbalance = -(self._position - self.product_positions[self.product_number + 1] - self.ramp_down)
-            #elif cond2:
-            #    self.imbalance = -(self._position - self.product_positions[self.product_number - 1] - self.ramp_down)
-            else:
-                self.imbalance = min(self.ramp_up, self.stored_energy - sum(self.product_positions))
-        else:
-            self.imbalance = self.stored_energy - sum(self.product_positions)
+    # def compute_imbalance_old(self, time):
+    #     """
+    #     Compute the difference between current position and recent forecast. Added physical ramp up/down constraints
+    #     First attempt at storage imbalances
+    #     :return: N/A
+    #     """
+    #     if time in self.ramp_active_timeline:
+    #         try:
+    #             cond1 = (self._position - self.product_positions[self.product_number + 1] > self.ramp_down)
+    #         except:
+    #             cond1 = False
+    #         try:
+    #             cond2 = (self._position - self.product_positions[self.product_number - 1] > self.ramp_down)
+    #         except:
+    #             cond2 = False
+    #         if cond1 or cond2:
+    #             self.imbalance = -(self._position - min(self.product_positions[self.product_number + 1],
+    #                                                     self.product_positions[self.product_number - 1]) - self.ramp_down)
+    #         #elif cond1:
+    #         #    self.imbalance = -(self._position - self.product_positions[self.product_number + 1] - self.ramp_down)
+    #         #elif cond2:
+    #         #    self.imbalance = -(self._position - self.product_positions[self.product_number - 1] - self.ramp_down)
+    #         else:
+    #             self.imbalance = min(self.ramp_up, self.stored_energy - sum(self.product_positions))
+    #     else:
+    #         self.imbalance = self.stored_energy - sum(self.product_positions)
 
     def compute_imbalance_new(self, time):
         """
