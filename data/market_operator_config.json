@@ -11,3 +11,18 @@
   "random_seed": 42,
   "description": "This experiment implements strategies change"
 }
+
+
+//{
+//  "start_trade":["16:00","16:00","16:00"],
+//  "end_trade": ["23:00","00:00","1:00"],
+//  "time_step":["5min","5min","5min"],
+//  "system_regulation": ["random","random","random"],
+//  "up_regulation_price":[120,150,130],
+//  "dn_regulation_price":[5,5,5],
+//  "spot_price":[30,30,30],
+//  "influence_imbalance": [1.0,1.0,1.0],
+//  "dual_pricing":[true,true,true],
+//  "random_seed": [42,42,42],
+//  "description": "This experiment implements multiple products"
+//}

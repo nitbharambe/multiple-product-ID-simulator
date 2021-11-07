@@ -255,7 +255,7 @@ class Storage(Agent):
     def compute_margins_new(self,time):
         """
         Function that computes the available upwards or downwards ramping capacity of the unit.
-        The upwards(donwards) capacity is the max volume that can be sold(bought) in the market.
+        The upwards(downwards) capacity is the max volume that can be sold(bought) in the market.
         :return: N/A
         """
         #
