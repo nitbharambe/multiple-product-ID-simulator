@@ -31,6 +31,7 @@ class Plotter(object):
         self.figdpi = 500
         fontP = FontProperties()
         fontP.set_size('xx-small')
+        self.xformatter = mdates.DateFormatter('%H')
 
 
     def plot_positions(self):
