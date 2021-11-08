@@ -14,12 +14,12 @@ if __name__ == "__main__":
     save_configs(config_traders, config_market_operator, exp_path)
     set_up_logger(exp_path, args)
 
-    NordPool_all = allmarket(config_traders, config_market_operator, exp_path, no_of_products=5)
+    NordPool_all = allmarket(config_traders, config_market_operator, exp_path, no_of_products=24)
 
 #   NordPool = MarketOperator(config_traders, config_market_operator, exp_path)
 #   NordPool.runMarket()
 
-    # plot = Plotter(NordPool_all, exp_path, args["show_plots"])
-    # plot.generate_plots()
+    plot = Plotter(NordPool_all, exp_path, args["show_plots"])
+    plot.generate_plots()
     plt.close('all')
     print('breakpoint')
