@@ -43,7 +43,8 @@ class MarketOperator(object):
         self.top_of_book = dict()
         # self.all_positions = dict() TODO: remove
         self.end_trade = pd.to_datetime(self.end_trade)
-        if self.end_trade < self.start_trade:
+        if self.product_number > 0:
+        #if self.end_trade < self.start_trade:
             self.end_trade += pd.to_timedelta('1D')
         self.time_step = pd.to_timedelta(self.time_step)
         # TODO Fix end trade
