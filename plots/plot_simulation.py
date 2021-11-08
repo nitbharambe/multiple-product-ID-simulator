@@ -52,7 +52,6 @@ class Plotter(object):
         for id, traders in self.traders.items():
             if isinstance(traders, RES) or isinstance(traders, Consumer):
                 plt.figure()
-
                 ax = plt.subplot(211)
                 ax.set_title(id+('_')+str(self.product_number))
                 ax.set_ylabel("Volume (MWh)")
@@ -299,7 +298,7 @@ class Plotter(object):
         [transaction["price"] for transaction in self.order_book.trade_book]
 
     def generate_plots(self):
-        self.plot_equilibrium()
+        #self.plot_equilibrium()
         self.plot_positions()
         self.plot_variable_positions()
         self.plot_market_evolution()
