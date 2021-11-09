@@ -16,7 +16,7 @@ if __name__ == "__main__":
     save_configs(config_traders, config_market_operator, exp_path)
     set_up_logger(exp_path, args)
 
-    NordPool_all = allmarket(config_traders, config_market_operator, exp_path, no_of_products=5)
+    NordPool_all = allmarket(config_traders, config_market_operator, exp_path, no_of_products=24)
     product_plot(exp_path, NordPool_all)
 
 #   NordPool = MarketOperator(config_traders, config_market_operator, exp_path)
