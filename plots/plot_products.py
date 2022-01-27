@@ -35,12 +35,19 @@ def product_plot(exp_path, NordPool_all):
 
     for id, items in NordPool_all.products[0].traders.items():
         pivoted = data_heatmap[data_heatmap['trader'] == id].pivot(index="p_no", columns="time", values="volume")
-        plt.figure(figsize=(15,8))
+        plt.figure(figsize=(15,9))
+        plt.rcParams.update({'font.size': 22})
         snsax = sns.heatmap(pivoted, center=0)
         snsax.set_title("%s Traded Volume" % (id))
-        snsax.set_ylabel("Product Number")
-        snsax.set_xlabel("Time")
-        snsax.set_xticklabels(pivoted.columns.strftime('%H:%M'))
+        snsax.set_ylabel("Delivery Product Number")
+        snsax.set_xlabel("Trading Horizon")
+
+        xlabs = pivoted.columns.strftime('%H:%M')
+        xlabs_mod = []
+        for c in range(len(xlabs)):
+            if c % 3 == 0:
+                xlabs_mod.append(xlabs[c])
+        snsax.set_xticklabels(xlabs_mod)
         plt.savefig("%s/a_%s_%s%s" % (exp_path, "heatmap", id, ".png"), dpi=500, bbox_inches='tight')
         #plt.show()
 
