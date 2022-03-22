@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 from collections import defaultdict
 from plots.plot_simulation import Plotter
-
+import matplotlib.pyplot as plt
 
 from mmabm.orderbook import Orderbook
 from mmabm.shared import Side, OType
@@ -232,8 +232,8 @@ class MarketOperator(object):
         self.print_agent_results()
 
     def print_agent_results(self):
-        logging.info("Trader - Position - Revenue")
-        [logging.info("%s - %s - %s" % (id, trader._position, trader._cash_flow)) for id, trader in
+        logging.info("Trader - Position - Revenue -  Limitsbuy - limitssell")
+        [logging.info("%s - %s - %s - %s - %s" % (id, trader._position, trader._cash_flow, trader.limits_buy, trader.limits_sell)) for id, trader in
          self.traders.items()]
 
     def compute_vwap(self):
@@ -373,108 +373,108 @@ class MarketOperator(object):
 
         self.equilibriums[time] = {"buy": limits_buy, "sell": limits_sell}
 
-    def day_ahead_clearing(self):
-        da_demand_q = []
-        da_demand_p = []
-        da_demand_id = []
-
-        da_supply_q = []
-        da_supply_p = []
-        da_supply_id = []
-
-        # sort by agent type
-        for id_agent, agent in self.traders.items():
-            type_agent, quantity, price = agent.da_trade()
-
-            if type_agent is "DEMAND":
-                da_demand_q.append(quantity)
-                da_demand_p.append(price)
-                da_demand_id.append(id_agent)
-            else:
-                da_supply_q.append(quantity)
-                da_supply_p.append(price)
-                da_supply_id.append(id_agent)
-
-        # build cumulative supply and demand
-        demand_arg = np.argsort(da_demand_p)
-        da_demand_q = np.cumsum(np.array(da_demand_q)[demand_arg])
-        da_demand_p = np.array(da_demand_p)[demand_arg]
-        da_demand_id = np.array(da_demand_id)[demand_arg]
-        max_demand = da_demand_q[-1]
-
-        supply_arg = np.argsort(da_supply_p)
-        da_supply_q = np.cumsum(np.array(da_supply_q)[supply_arg])
-        da_supply_p = np.array(da_supply_p)[supply_arg]
-        da_supply_id = np.array(da_supply_id)[supply_arg]
-
-        # find equilibrium:
-        if da_supply_p[0] > da_demand_p[-1]:
-            # no clearing
-            equilibrium_q = 0
-            equilibrium_p = None
-        else:
-            # clearing
-            def linear_regression(q, da_q, da_p):
-                id_q = np.searchsorted(da_q, q)
-
-                if q <= da_q[0]:
-                    return da_p[0]
-                elif q == da_q[-1]:
-                    return da_p[-1]
-                elif q > da_q[-1]:
-                    return None
-                else:
-                    return (da_p[id_q - 1] - da_p[id_q]) * (q - da_q[id_q]) / \
-                           (da_q[id_q - 1] - da_q[id_q]) + da_p[id_q]
-
-            def demand_function(q):
-                return linear_regression(max_demand - q, da_demand_q, da_demand_p)
-
-            def supply_function(q):
-                return linear_regression(q, da_supply_q, da_supply_p)
-
-            q_max = min(da_supply_q[-1], da_demand_q[-1])
-
-            if demand_function(q_max) <= supply_function(q_max):
-                # explicit crossing
-
-                def objective(q):
-                    return supply_function(q) - demand_function(q)
-
-                q_a = 0
-                q_b = q_max
-                equilibrium_q = bisect(objective, q_a, q_b)
-                equilibrium_p = supply_function(equilibrium_q)
-
-            else:
-                # no explicit crossing but clearing at max capacity
-                equilibrium_q = q_max
-                equilibrium_p = supply_function(equilibrium_q) + \
-                                (demand_function(equilibrium_q) - supply_function(equilibrium_q)) / 2
-
-        logging.info('DA quantity cleared : ', equilibrium_q)
-        logging.info('DA price : ', equilibrium_p)
-
-        # from the clearing price and equilibrium_q adapt the agents' available quantity
-        for ag_q, ag_p, ag_id in zip((da_demand_q, da_supply_q),
-                                     (da_demand_p, da_supply_p),
-                                     (da_demand_id, da_supply_id)):
-            quantity_supplied = 0
-            for agent_q, agent_p, agent_id in zip(ag_q, ag_p, ag_id):
-                residual_q = equilibrium_q - quantity_supplied
-                if residual_q <= 0:
-                    # agent is not cleared
-                    self.traders[agent_id].da_position = 0
-                else:
-                    # clear agent
-                    if agent_q <= residual_q:
-                        # completely cleared
-                        self.traders[agent_id].da_position = agent_q
-                        quantity_supplied += agent_q
-                    else:
-                        # partially cleared
-                        self.traders[agent_id].da_position = residual_q
-                        quantity_supplied += residual_q
+    # def day_ahead_clearing(self):
+    #     da_demand_q = []
+    #     da_demand_p = []
+    #     da_demand_id = []
+    #
+    #     da_supply_q = []
+    #     da_supply_p = []
+    #     da_supply_id = []
+    #
+    #     # sort by agent type
+    #     for id_agent, agent in self.traders.items():
+    #         type_agent, quantity, price = agent.da_trade()
+    #
+    #         if type_agent is "DEMAND":
+    #             da_demand_q.append(quantity)
+    #             da_demand_p.append(price)
+    #             da_demand_id.append(id_agent)
+    #         else:
+    #             da_supply_q.append(quantity)
+    #             da_supply_p.append(price)
+    #             da_supply_id.append(id_agent)
+    #
+    #     # build cumulative supply and demand
+    #     demand_arg = np.argsort(da_demand_p)
+    #     da_demand_q = np.cumsum(np.array(da_demand_q)[demand_arg])
+    #     da_demand_p = np.array(da_demand_p)[demand_arg]
+    #     da_demand_id = np.array(da_demand_id)[demand_arg]
+    #     max_demand = da_demand_q[-1]
+    #
+    #     supply_arg = np.argsort(da_supply_p)
+    #     da_supply_q = np.cumsum(np.array(da_supply_q)[supply_arg])
+    #     da_supply_p = np.array(da_supply_p)[supply_arg]
+    #     da_supply_id = np.array(da_supply_id)[supply_arg]
+    #
+    #     # find equilibrium:
+    #     if da_supply_p[0] > da_demand_p[-1]:
+    #         # no clearing
+    #         equilibrium_q = 0
+    #         equilibrium_p = None
+    #     else:
+    #         # clearing
+    #         def linear_regression(q, da_q, da_p):
+    #             id_q = np.searchsorted(da_q, q)
+    #
+    #             if q <= da_q[0]:
+    #                 return da_p[0]
+    #             elif q == da_q[-1]:
+    #                 return da_p[-1]
+    #             elif q > da_q[-1]:
+    #                 return None
+    #             else:
+    #                 return (da_p[id_q - 1] - da_p[id_q]) * (q - da_q[id_q]) / \
+    #                        (da_q[id_q - 1] - da_q[id_q]) + da_p[id_q]
+    #
+    #         def demand_function(q):
+    #             return linear_regression(max_demand - q, da_demand_q, da_demand_p)
+    #
+    #         def supply_function(q):
+    #             return linear_regression(q, da_supply_q, da_supply_p)
+    #
+    #         q_max = min(da_supply_q[-1], da_demand_q[-1])
+    #
+    #         if demand_function(q_max) <= supply_function(q_max):
+    #             # explicit crossing
+    #
+    #             def objective(q):
+    #                 return supply_function(q) - demand_function(q)
+    #
+    #             q_a = 0
+    #             q_b = q_max
+    #             equilibrium_q = bisect(objective, q_a, q_b)
+    #             equilibrium_p = supply_function(equilibrium_q)
+    #
+    #         else:
+    #             # no explicit crossing but clearing at max capacity
+    #             equilibrium_q = q_max
+    #             equilibrium_p = supply_function(equilibrium_q) + \
+    #                             (demand_function(equilibrium_q) - supply_function(equilibrium_q)) / 2
+    #
+    #     logging.info('DA quantity cleared : ', equilibrium_q)
+    #     logging.info('DA price : ', equilibrium_p)
+    #
+    #     # from the clearing price and equilibrium_q adapt the agents' available quantity
+    #     for ag_q, ag_p, ag_id in zip((da_demand_q, da_supply_q),
+    #                                  (da_demand_p, da_supply_p),
+    #                                  (da_demand_id, da_supply_id)):
+    #         quantity_supplied = 0
+    #         for agent_q, agent_p, agent_id in zip(ag_q, ag_p, ag_id):
+    #             residual_q = equilibrium_q - quantity_supplied
+    #             if residual_q <= 0:
+    #                 # agent is not cleared
+    #                 self.traders[agent_id].da_position = 0
+    #             else:
+    #                 # clear agent
+    #                 if agent_q <= residual_q:
+    #                     # completely cleared
+    #                     self.traders[agent_id].da_position = agent_q
+    #                     quantity_supplied += agent_q
+    #                 else:
+    #                     # partially cleared
+    #                     self.traders[agent_id].da_position = residual_q
+    #                     quantity_supplied += residual_q
 
     def store_result(self, before_imbalance_flag):
         columns = ["Trader", "Position", "Revenues"]
@@ -632,6 +632,8 @@ class allmarket:
                                                               "results_before_imbalance_settlement.csv" if
                                                               before_imbalance_flag else
                                                               "results_after_imbalance_settlement.csv"))
+        stored_data = pd.DataFrame(data, columns=columns)
+
     def store_imbalances(self):
         """
         Debugging method which stores imbalances. It was used to understand the functioning of the simulator

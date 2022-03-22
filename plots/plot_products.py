@@ -48,6 +48,6 @@ def product_plot(exp_path, NordPool_all):
             if c % 3 == 0:
                 xlabs_mod.append(xlabs[c])
         snsax.set_xticklabels(xlabs_mod)
-        plt.savefig("%s/a_%s_%s%s" % (exp_path, "heatmap", id, ".png"), dpi=500, bbox_inches='tight')
+        plt.savefig("%s/a_%s_%s%s" % (exp_path, "heatmap", id, ".pdf"), dpi=500, bbox_inches='tight')
         #plt.show()
 

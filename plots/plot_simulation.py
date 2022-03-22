@@ -298,10 +298,10 @@ class Plotter(object):
         [transaction["price"] for transaction in self.order_book.trade_book]
 
     def generate_plots(self):
-        #self.plot_equilibrium()
+        # self.plot_equilibrium()
         self.plot_positions()
         self.plot_variable_positions()
-        self.plot_market_evolution()
+        # self.plot_market_evolution()
         #self.plot_order_book()
         self.plot_imbalance()
 
