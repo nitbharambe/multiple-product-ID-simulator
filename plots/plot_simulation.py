@@ -175,7 +175,7 @@ class Plotter(object):
             ax.legend(bbox_to_anchor=(1.04,0.5), loc="center left", borderaxespad=0)
             ax1.legend(bbox_to_anchor=(1.04,0.5), loc="center left", borderaxespad=0)
             ax1.set_ylim([self.down_lim, self.up_lim])
-            plt.savefig("%s/z_%s_%s_%s%s" % (self.path, id, "traderAA_params", self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
+            plt.savefig("%s/%s_%s_%s%s" % (self.path, id, "traderAA_params", self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
             ax.set_xticklabels([])
         if self.show_plots:plt.show()
 
@@ -189,7 +189,7 @@ class Plotter(object):
         #plt.plot(self.order_book_data["vwap_ask"], label="vwap_ask")
         #plt.plot(self.order_book_data["vwap_buy"], label="vwap_buy")
         plt.legend(bbox_to_anchor=(1.04,0.5), loc="center left", borderaxespad=0)
-        plt.savefig("%s/z_%s_%s%s" % (self.path,  "market_evolution",self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
+        plt.savefig("%s/%s_%s%s" % (self.path,  "market_evolution",self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
 
         plt.figure()
         ax = plt.subplot(111)
@@ -237,7 +237,7 @@ class Plotter(object):
         ax.add_artist(legend1)
         ax.set_ylim([self.down_lim, self.up_lim])
 
-        plt.savefig("%s/z_%s_%s%s" % (self.path, "orders_sumbitted", self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
+        plt.savefig("%s/%s_%s%s" % (self.path, "orders_sumbitted", self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
 
     def plot_order_book(self):
         prices_sell = np.array([key for key in sorted(self.order_book._ask_book.keys(), reverse=False) if
@@ -260,7 +260,7 @@ class Plotter(object):
         plt.plot(prices_buy, volumes_buy)
         plt.ylim([self.down_lim, self.up_lim])
 
-        plt.savefig("%s/z_%s_%s%s" % (self.path, "order_book",self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
+        plt.savefig("%s/%s_%s%s" % (self.path, "order_book",self.product_number, ".png"), dpi=self.figdpi, bbox_inches='tight')
 
     def plot_equilibrium(self):
         for t, curves in self.equilibriums.items():

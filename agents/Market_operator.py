@@ -525,6 +525,12 @@ class allmarket:
         self.all_forecasts = {
             time: {id: [None for p_no, product in self.products.items()] for id in self.products[0].traders} for time in
             self.trading_horizon_all}
+        self.all_product_eqlbm = {
+            time: {id: [None for p_no, product in self.products.items()] for id in self.products[0].traders} for time in
+            self.trading_horizon_all}
+        self.all_product_stored = {
+            time: {id: [None for p_no, product in self.products.items()] for id in self.products[0].traders} for time in
+            self.trading_horizon_all}
 
         self.runproduct()
         self.plots()
@@ -566,8 +572,6 @@ class allmarket:
         :param current_time: The time index at which the new information is added
         :return: N/A
         """
-        all_product_stored = []
-        all_product_eqlbm = []
         for p_no, product in self.products.items():
             for id, trader in product.traders.items():
                 self.all_positions[current_time][id][p_no] = trader._position
@@ -575,9 +579,9 @@ class allmarket:
                 if hasattr(trader, 'forecaster'):
                     self.all_forecasts[current_time][id][p_no] = trader.forecaster.curr
                 if isinstance(trader, Storage):
-                    all_product_eqlbm.append(trader.trader_behavior.eqlbm)
+                    self.all_product_eqlbm[current_time][id][p_no] = trader.trader_behavior.eqlbm
                     if current_time == self.trading_horizon_all[0]:
-                        all_product_stored.append(trader.stored_energy)
+                        self.all_product_stored[current_time][id][p_no] = trader.stored_energy
 
         for p_no, product in self.products.items():
             for id, trader in product.traders.items():
@@ -585,9 +589,9 @@ class allmarket:
                 if hasattr(trader, 'forecaster'):
                     trader.forecaster.product_forecasts = self.all_forecasts[current_time][id]
                 if isinstance(trader, Storage):
-                    trader.all_eqlbm = all_product_eqlbm
+                    trader.all_eqlbm = self.all_product_eqlbm[current_time][id]
                     if current_time == self.trading_horizon_all[0]:
-                        trader.all_stored = all_product_stored
+                        trader.all_stored = self.all_product_stored[current_time][id]
 
     def runproduct(self):
         """

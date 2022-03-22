@@ -22,7 +22,7 @@ if __name__ == "__main__":
 #   NordPool = MarketOperator(config_traders, config_market_operator, exp_path)
 #   NordPool.runMarket()
 
-    plot = Plotter(NordPool_all, exp_path, args["show_plots"])
+    #plot = Plotter(NordPool_all, exp_path, args["show_plots"])
     # plot.generate_plots()
     plt.close('all')
     print('breakpoint')
