@@ -6,7 +6,6 @@ from plots.plot_simulation import Plotter
 from utils import get_exp_path, save_configs, load_configs, parse_args, set_up_logger
 from matplotlib import pyplot as plt
 from plots.plot_products import product_plot
-# from plots.plot_revenues import plot_revs
 
 if __name__ == "__main__":
     plt.close('all')
@@ -19,10 +18,5 @@ if __name__ == "__main__":
     NordPool_all = allmarket(config_traders, config_market_operator, exp_path, no_of_products=24)
     product_plot(exp_path, NordPool_all)
 
-#   NordPool = MarketOperator(config_traders, config_market_operator, exp_path)
-#   NordPool.runMarket()
-
-    #plot = Plotter(NordPool_all, exp_path, args["show_plots"])
-    # plot.generate_plots()
     plt.close('all')
     print('breakpoint')
